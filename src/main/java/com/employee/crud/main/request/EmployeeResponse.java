@@ -1,45 +1,22 @@
-package com.employee.crud.main.entity;
+package com.employee.crud.main.request;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class EmployeeResponse {
 
-@Table(name = "txn_Employee")
-@Entity
-public class Employee {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Employee_Id")
-	private int EmployeeId;
-
-	@Column(name = "Employee_Name")
+	private int employeeId;
 	private String employeeName;
-
-	@Column(name = "address")
 	private String address;
-
-	@Column(name = "age")
 	private int age;
-
-	@Column(name = "Company_Name")
 	private String companyName;
-
-	@Column(name = "dept")
 	private String dept;
 
-	@Column(name = "salary")
 	private double salary;
 
 	public int getEmployeeId() {
-		return EmployeeId;
+		return employeeId;
 	}
 
 	public void setEmployeeId(int employeeId) {
-		EmployeeId = employeeId;
+		this.employeeId = employeeId;
 	}
 
 	public String getEmployeeName() {
@@ -92,7 +69,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [EmployeeId=" + EmployeeId + ", employeeName=" + employeeName + ", address=" + address
+		return "EmployeeResponse [employeeId=" + employeeId + ", employeeName=" + employeeName + ", address=" + address
 				+ ", age=" + age + ", companyName=" + companyName + ", dept=" + dept + ", salary=" + salary + "]";
 	}
 
