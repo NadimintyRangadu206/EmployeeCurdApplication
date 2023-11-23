@@ -42,12 +42,12 @@ public class EmployeeController {
 
 		return employeeService.getEmployeeById(id);
 	}
-	
+
 	@GetMapping("get/all")
-	public List<Employee> getAllEmloyees(){
-		
-		List<Employee> listOfEmployees=employeeService.getAllEmployees();
-		
+	public List<Employee> getAllEmloyees() {
+
+		List<Employee> listOfEmployees = employeeService.getAllEmployees();
+
 		return listOfEmployees;
 	}
 }
