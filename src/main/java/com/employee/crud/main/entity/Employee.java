@@ -13,7 +13,6 @@ public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	@Column(name = "Employee_Id")
 	private int EmployeeId;
 

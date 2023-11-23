@@ -2,7 +2,7 @@ package com.employee.crud.main.request;
 
 public class EmployeeRequest {
 
-	private String EmployeeName;
+	private String employeeName;
 
 	private String address;
 
@@ -15,11 +15,11 @@ public class EmployeeRequest {
 	private double salary;
 
 	public String getEmployeeName() {
-		return EmployeeName;
+		return employeeName;
 	}
 
 	public void setEmployeeName(String employeeName) {
-		EmployeeName = employeeName;
+		this.employeeName = employeeName;
 	}
 
 	public String getAddress() {
@@ -64,7 +64,7 @@ public class EmployeeRequest {
 
 	@Override
 	public String toString() {
-		return "EmployeeRequest [EmployeeName=" + EmployeeName + ", address=" + address + ", age=" + age
+		return "EmployeeRequest [employeeName=" + employeeName + ", address=" + address + ", age=" + age
 				+ ", companyName=" + companyName + ", dept=" + dept + ", salary=" + salary + "]";
 	}
 
