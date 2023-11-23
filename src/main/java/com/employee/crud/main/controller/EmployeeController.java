@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,17 +52,29 @@ public class EmployeeController {
 
 		return listOfEmployees;
 	}
-	
+
 	@PostMapping("update/employee")
-	public  ResponseEntity<String> updateEmployeeById(@RequestBody EmployeeResponse employeeResponse) {
-		
-		Employee emp=employeeService.updateEmployee(employeeResponse);
-	
-		if(emp!=null) {
-			return new ResponseEntity<>("Employee Details are Update!",HttpStatus.OK);
-		}else {
+	public ResponseEntity<String> updateEmployeeById(@RequestBody EmployeeResponse employeeResponse) {
+
+		Employee emp = employeeService.updateEmployee(employeeResponse);
+
+		if (emp != null) {
+			return new ResponseEntity<>("Employee Details are Update!", HttpStatus.OK);
+		} else {
 			return new ResponseEntity<>("Something went wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
+	}
+
+	@DeleteMapping("delete/employee/{id}")
+	public ResponseEntity<String> deleteEmployee(@PathVariable int id) {
+
+		employeeService.deleteEmployee(id);
+		if (id != 0) {
+			return new ResponseEntity<String>("Employee Details are Deleted Succesfully..", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("Something went wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 }
