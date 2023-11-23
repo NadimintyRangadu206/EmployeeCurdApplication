@@ -10,4 +10,6 @@ public interface EmployeeService {
 
 	Employee saveEmployeeInfo(EmployeeRequest request);
 
+	Employee getEmployeeById(int id);
+
 }
