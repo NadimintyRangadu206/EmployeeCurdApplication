@@ -1,5 +1,7 @@
 package com.employee.crud.main.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setSalary(request.getSalary());
 
 		return employeeRepository.save(employee);
+	}
+
+	@Override
+	public Employee getEmployeeById(int id) {
+
+		Optional<Employee> employee = employeeRepository.findById(id);
+
+		if (employee.isPresent()) {
+			return employee.get();
+		} else {
+			return null;
+		}
+
 	}
 
 }
