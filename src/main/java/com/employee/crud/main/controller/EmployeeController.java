@@ -1,5 +1,7 @@
 package com.employee.crud.main.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +36,18 @@ public class EmployeeController {
 		}
 
 	}
-	
+
 	@GetMapping("get/{id}")
 	public Employee getEmployeeById(@PathVariable int id) {
-		
+
 		return employeeService.getEmployeeById(id);
+	}
+	
+	@GetMapping("get/all")
+	public List<Employee> getAllEmloyees(){
+		
+		List<Employee> listOfEmployees=employeeService.getAllEmployees();
+		
+		return listOfEmployees;
 	}
 }
