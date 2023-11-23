@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.crud.main.entity.Employee;
 import com.employee.crud.main.request.EmployeeRequest;
+import com.employee.crud.main.request.EmployeeResponse;
 import com.employee.crud.main.service.EmployeeService;
 
 @RestController
@@ -49,5 +50,18 @@ public class EmployeeController {
 		List<Employee> listOfEmployees = employeeService.getAllEmployees();
 
 		return listOfEmployees;
+	}
+	
+	@PostMapping("update/employee")
+	public  ResponseEntity<String> updateEmployeeById(@RequestBody EmployeeResponse employeeResponse) {
+		
+		Employee emp=employeeService.updateEmployee(employeeResponse);
+	
+		if(emp!=null) {
+			return new ResponseEntity<>("Employee Details are Update!",HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("Something went wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 }
