@@ -76,4 +76,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.saveAndFlush(emp);
 	}
 
+	@Override
+	public void deleteEmployee(int id) {
+
+ 		employeeRepository.deleteById(id);
+		
+	}
+
 }
