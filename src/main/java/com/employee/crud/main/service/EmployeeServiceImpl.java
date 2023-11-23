@@ -1,5 +1,6 @@
 package com.employee.crud.main.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return null;
 		}
 
+	}
+
+	@Override
+	public List<Employee> getAllEmployees() {
+		
+	List<Employee> listOfEmployees=employeeRepository.findAll();
+		return listOfEmployees ;
 	}
 
 }
