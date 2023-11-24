@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.crud.main.entity.Employee;
+import com.employee.crud.main.exception.EmployeeException;
 import com.employee.crud.main.request.EmployeeRequest;
 import com.employee.crud.main.request.EmployeeResponse;
 import com.employee.crud.main.service.EmployeeService;
@@ -28,6 +29,7 @@ public class EmployeeController {
 	@PostMapping("save")
 	public ResponseEntity<String> saveEmployee(@RequestBody EmployeeRequest request) {
 
+		try {
 		Employee employee = employeeService.saveEmployeeInfo(request);
 
 		if (employee != null) {
@@ -35,6 +37,10 @@ public class EmployeeController {
 		} else {
 
 			return new ResponseEntity<>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		}
+		catch(EmployeeException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 
 	}
