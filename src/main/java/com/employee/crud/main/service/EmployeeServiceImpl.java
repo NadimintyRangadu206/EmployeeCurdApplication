@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee saveEmployeeInfo(EmployeeRequest request) {
 
-		validateEmployeeInfo(request);
+//		validateEmployeeInfo(request);
 		
 		Employee employee = new Employee();
 
@@ -36,18 +36,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.save(employee);
 	}
 
-	private void validateEmployeeInfo(EmployeeRequest request) {
-
-		if(request.getEmployeeName()==null || request.getEmployeeName().trim().isEmpty()) {
-			
-			throw new EmployeeException(400, "Please Provide Employee Name Here");
-		}
-		
-		if((request.getAge()>=18 && request.getAge()<=60)|| (request.getAge()==0) ) {
-			throw new EmployeeException(400, "Age range(18-60) Please Check!");
-		}
-		
-	}
+//	private void validateEmployeeInfo(EmployeeRequest request) {
+//
+//		if(request.getEmployeeName()==null || request.getEmployeeName().trim().isEmpty()) {
+//			
+//			throw new EmployeeException(400, "Please Provide Employee Name Here");
+//		}
+//		
+//		if((request.getAge()>=18 && request.getAge()<=60)|| (request.getAge()==0) ) {
+//			throw new EmployeeException(400, "Age range(18-60) Please Check!");
+//		}
+//		
+//	}
 
 	@Override
 	public Employee getEmployeeById(int id) {

@@ -19,6 +19,8 @@ import com.employee.crud.main.request.EmployeeRequest;
 import com.employee.crud.main.request.EmployeeResponse;
 import com.employee.crud.main.service.EmployeeService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/v1/employee/")
 public class EmployeeController {
@@ -27,7 +29,7 @@ public class EmployeeController {
 	EmployeeService employeeService;
 
 	@PostMapping("save")
-	public ResponseEntity<String> saveEmployee(@RequestBody EmployeeRequest request) {
+	public ResponseEntity<String> saveEmployee(@RequestBody @Valid EmployeeRequest request) {
 
 		try {
 		Employee employee = employeeService.saveEmployeeInfo(request);
