@@ -59,6 +59,8 @@ public class ReadFileServiceImpl implements ReadFileService {
 		if (listOfEmployee != null) {
 			listOfEmployee = employeeRepository.saveAll(listOfEmployee);
 		}
+		is.close();
+		br.close();
 
 		return listOfEmployee;
 	}
