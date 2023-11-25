@@ -1,11 +1,16 @@
 package com.employee.crud.main.request;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class EmployeeRequest {
 
+	@NotNull(message="Please Provide Employee Name")
 	private String employeeName;
 
 	private String address;
-
+     @Min(value=18)@Max(value=60)
 	private int age;
 
 	private String companyName;
