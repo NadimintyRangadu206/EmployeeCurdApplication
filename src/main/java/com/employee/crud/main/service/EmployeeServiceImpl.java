@@ -5,13 +5,18 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.employee.crud.main.entity.Employee;
-import com.employee.crud.main.exception.EmployeeException;
 import com.employee.crud.main.repository.EmployeeRepository;
+import com.employee.crud.main.request.EmployeePageResponse;
 import com.employee.crud.main.request.EmployeeRequest;
 import com.employee.crud.main.request.EmployeeResponse;
+import com.employee.crud.main.request.EmployeeSearch;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -23,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee saveEmployeeInfo(EmployeeRequest request) {
 
 //		validateEmployeeInfo(request);
-		
+
 		Employee employee = new Employee();
 
 		employee.setEmployeeName(request.getEmployeeName());
@@ -92,8 +97,39 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void deleteEmployee(int id) {
 
- 		employeeRepository.deleteById(id);
+		employeeRepository.deleteById(id);
+
+	}
+
+	@Override
+	public EmployeePageResponse findByAllEmployees(EmployeeSearch employeeSearch) {
 		
+		EmployeePageResponse employeePageResponse= new EmployeePageResponse();
+		
+		Pageable paging = PageRequest.of(employeeSearch.getPage() - 1, employeeSearch.getLimit(),
+				Sort.by(Sort.Direction.fromString(employeeSearch.getOrderDirection()), employeeSearch.getOrderBy()));
+	if(employeeSearch.getEmployeeName().isEmpty()
+			&& employeeSearch.getAddress().isEmpty()
+			&& employeeSearch.getAge()==0
+			&& employeeSearch.getCompanyName().isEmpty()
+			&& employeeSearch.getDept().isEmpty()
+			&& employeeSearch.getSalary()==0) {
+		
+		Page<Employee> employeeList=employeeRepository.findByAllEmployees(paging);
+		
+		employeePageResponse.setCount(employeeList.getSize());
+		employeePageResponse.setListOfEmployees(employeeList.getContent());
+	}else {
+		
+		Page<Employee> employeeList = employeeRepository.findAllSearchByEmployee(paging,
+				employeeSearch.getEmployeeName(), employeeSearch.getAddress(), employeeSearch.getAge(),
+				employeeSearch.getCompanyName(), employeeSearch.getDept(), employeeSearch.getSalary());
+
+		employeePageResponse.setCount(employeeList.getSize());
+		employeePageResponse.setListOfEmployees(employeeList.getContent());
+	}
+
+	return employeePageResponse;
 	}
 
 }

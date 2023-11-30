@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.employee.crud.main.entity.Employee;
+import com.employee.crud.main.request.EmployeePageResponse;
 import com.employee.crud.main.request.EmployeeRequest;
 import com.employee.crud.main.request.EmployeeResponse;
+import com.employee.crud.main.request.EmployeeSearch;
 
 @Service
 public interface EmployeeService {
@@ -20,5 +22,7 @@ public interface EmployeeService {
 	Employee updateEmployee(EmployeeResponse employeeResponse);
 
 	public void deleteEmployee(int id);
+
+EmployeePageResponse findByAllEmployees(EmployeeSearch employeeSearch);
 
 }
