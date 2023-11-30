@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.employee.crud.main.entity.AuthRequest;
 import com.employee.crud.main.entity.Employee;
 import com.employee.crud.main.exception.EmployeeException;
+import com.employee.crud.main.request.EmployeePageResponse;
 import com.employee.crud.main.request.EmployeeRequest;
 import com.employee.crud.main.request.EmployeeResponse;
+import com.employee.crud.main.request.EmployeeSearch;
 import com.employee.crud.main.service.EmployeeService;
 import com.employee.crud.main.service.JwtService;
 
@@ -111,4 +113,15 @@ public class EmployeeController {
 			throw new EmployeeException(400, "Invalid User");
 		}
 	}
+	
+	
+	
+	@PostMapping("search/employee")
+	public EmployeePageResponse findByAllEmployees(@RequestBody EmployeeSearch employeeSearch){
+		
+		return employeeService.findByAllEmployees(employeeSearch);
+		 
+	}
+	
+	
 }
