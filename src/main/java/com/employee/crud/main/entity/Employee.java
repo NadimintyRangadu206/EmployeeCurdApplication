@@ -1,7 +1,10 @@
 package com.employee.crud.main.entity;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,7 +12,12 @@ import jakarta.persistence.Table;
 
 @Table(name = "txn_Employee")
 @Entity
-public class Employee {
+
+@EntityListeners(AuditingEntityListener.class)
+public class Employee extends EntityAudit {
+
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

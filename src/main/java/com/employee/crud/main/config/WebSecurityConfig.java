@@ -43,7 +43,7 @@ public class WebSecurityConfig {
 				.permitAll()
 				.and()
 				.authorizeHttpRequests()
-				.requestMatchers("api/v1/employee/**")
+				.requestMatchers("api/v1/employee/**","api/v1/otp/**")
 				.authenticated()
 				.and()
 				.sessionManagement()
