@@ -59,8 +59,10 @@ public class EmployeeController {
 			} else {
 
 				return new ResponseEntity<>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+				
 			}
 		} catch (EmployeeException e) {
+			logger.error(e.getMessage(),HttpStatus.BAD_REQUEST);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 

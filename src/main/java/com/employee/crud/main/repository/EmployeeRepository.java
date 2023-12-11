@@ -1,5 +1,7 @@
 package com.employee.crud.main.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,5 +25,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 			nativeQuery = false)
 	Page<Employee> findAllSearchByEmployee(Pageable paging, String employeeName, String address, int age,
 			String companyName, String dept, double salary);
+
+	@Query(value = "select "
+			+ "te.employee_id, te.employee_name,"
+			+ "te.address,te.age,te.company_name,"
+			+ "te.dept,te.salary from txn_employee te "
+			+ "where te.employee_id=?1", nativeQuery = true)
+	Optional<Employee> findByEmployeeId(int employeeId);
 
 }
