@@ -72,6 +72,7 @@ public class EmployeeController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Employee getEmployeeById(@PathVariable int id) {
 
+		logger.info(String.format("Employee Details are Retrieve based on Id"));
 		return employeeService.getEmployeeById(id);
 	}
 
