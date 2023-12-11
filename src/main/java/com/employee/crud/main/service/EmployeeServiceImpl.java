@@ -3,6 +3,8 @@ package com.employee.crud.main.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,17 +14,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.employee.crud.main.entity.Employee;
+import com.employee.crud.main.exception.EmployeeException;
 import com.employee.crud.main.repository.EmployeeRepository;
 import com.employee.crud.main.request.EmployeePageResponse;
 import com.employee.crud.main.request.EmployeeRequest;
 import com.employee.crud.main.request.EmployeeResponse;
 import com.employee.crud.main.request.EmployeeSearch;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
-
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+	private static final Logger logger=LogManager.getLogger(EmployeeServiceImpl.class);
+	
 	@Autowired
 	EmployeeRepository employeeRepository;
 
@@ -68,13 +71,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee getEmployeeById(int id) {
 
-		Optional<Employee> employee = employeeRepository.findById(id);
-
-		if (employee.isPresent()) {
-			return employee.get();
-		} else {
-			return null;
+		Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+ 
+		Employee emp= new Employee();
+		
+		if(optionalEmployee.isPresent()) {
+			
+			emp=optionalEmployee.get();
+		}else {
+			try {
+			throw new EmployeeException(400,optionalEmployee.orElseThrow().toString());
+			}
+			catch (Exception e) {
+				logger.info("Employee Id is Not Present");
+			}
 		}
+		return emp;
+		
 
 	}
 
