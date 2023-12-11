@@ -2,22 +2,43 @@ package com.employee.crud.main.request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class EmployeeRequest {
 
-	@NotNull(message="Please Provide Employee Name")
+	private int employeeId;
+	
+	@NotNull(message = "Please Provide Employee Name")
+	@NotEmpty(message = "Employee Name is Not Empty")
 	private String employeeName;
-
+	
+	@NotNull(message = "Please Provide address")
+	@NotEmpty(message = "Employee Name is Not Empty")
 	private String address;
-     @Min(value=18)@Max(value=60)
+	
+	@Min(value = 18)
+	@Max(value = 60)
 	private int age;
-
+	
+	@NotNull(message = "Please Provide companyName ")
+	@NotEmpty(message = "Employee Name is Not Empty")
 	private String companyName;
-
+	
+	@NotNull(message = "Please Provide dept")
+	@NotEmpty(message = "Employee Name is Not Empty")
+	
 	private String dept;
 
 	private double salary;
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
 
 	public String getEmployeeName() {
 		return employeeName;
@@ -69,8 +90,8 @@ public class EmployeeRequest {
 
 	@Override
 	public String toString() {
-		return "EmployeeRequest [employeeName=" + employeeName + ", address=" + address + ", age=" + age
-				+ ", companyName=" + companyName + ", dept=" + dept + ", salary=" + salary + "]";
+		return "EmployeeRequest [EmployeeId=" + employeeId + ", employeeName=" + employeeName + ", address=" + address
+				+ ", age=" + age + ", companyName=" + companyName + ", dept=" + dept + ", salary=" + salary + "]";
 	}
 
 }

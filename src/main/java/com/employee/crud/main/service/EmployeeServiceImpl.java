@@ -18,6 +18,8 @@ import com.employee.crud.main.request.EmployeeRequest;
 import com.employee.crud.main.request.EmployeeResponse;
 import com.employee.crud.main.request.EmployeeSearch;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -29,14 +31,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //		validateEmployeeInfo(request);
 
-		Employee employee = new Employee();
+		Employee employee = null;
 
-		employee.setEmployeeName(request.getEmployeeName());
-		employee.setAddress(request.getAddress());
-		employee.setAge(request.getAge());
-		employee.setCompanyName(request.getCompanyName());
-		employee.setDept(request.getDept());
-		employee.setSalary(request.getSalary());
+		Optional<Employee> optionalId = employeeRepository.findByEmployeeId(request.getEmployeeId());
+
+		if (optionalId.isPresent()) {
+			employee = optionalId.get();
+		} else {
+			employee = new Employee();
+		}
+		BeanUtils.copyProperties(request, employee);
+
+//		employee.setEmployeeName(request.getEmployeeName());
+//		employee.setAddress(request.getAddress());
+//		employee.setAge(request.getAge());
+//		employee.setCompanyName(request.getCompanyName());
+//		employee.setDept(request.getDept());
+//		employee.setSalary(request.getSalary());
 
 		return employeeRepository.save(employee);
 	}
@@ -103,33 +114,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeePageResponse findByAllEmployees(EmployeeSearch employeeSearch) {
-		
-		EmployeePageResponse employeePageResponse= new EmployeePageResponse();
-		
+
+		EmployeePageResponse employeePageResponse = new EmployeePageResponse();
+
 		Pageable paging = PageRequest.of(employeeSearch.getPage() - 1, employeeSearch.getLimit(),
 				Sort.by(Sort.Direction.fromString(employeeSearch.getOrderDirection()), employeeSearch.getOrderBy()));
-	if(employeeSearch.getEmployeeName().isEmpty()
-			&& employeeSearch.getAddress().isEmpty()
-			&& employeeSearch.getAge()==0
-			&& employeeSearch.getCompanyName().isEmpty()
-			&& employeeSearch.getDept().isEmpty()
-			&& employeeSearch.getSalary()==0) {
-		
-		Page<Employee> employeeList=employeeRepository.findByAllEmployees(paging);
-		
-		employeePageResponse.setCount(employeeList.getSize());
-		employeePageResponse.setListOfEmployees(employeeList.getContent());
-	}else {
-		
-		Page<Employee> employeeList = employeeRepository.findAllSearchByEmployee(paging,
-				employeeSearch.getEmployeeName(), employeeSearch.getAddress(), employeeSearch.getAge(),
-				employeeSearch.getCompanyName(), employeeSearch.getDept(), employeeSearch.getSalary());
+		if (employeeSearch.getEmployeeName().isEmpty() && employeeSearch.getAddress().isEmpty()
+				&& employeeSearch.getAge() == 0 && employeeSearch.getCompanyName().isEmpty()
+				&& employeeSearch.getDept().isEmpty() && employeeSearch.getSalary() == 0) {
 
-		employeePageResponse.setCount(employeeList.getSize());
-		employeePageResponse.setListOfEmployees(employeeList.getContent());
-	}
+			Page<Employee> employeeList = employeeRepository.findByAllEmployees(paging);
 
-	return employeePageResponse;
+			employeePageResponse.setCount(employeeList.getSize());
+			employeePageResponse.setListOfEmployees(employeeList.getContent());
+		} else {
+
+			Page<Employee> employeeList = employeeRepository.findAllSearchByEmployee(paging,
+					employeeSearch.getEmployeeName(), employeeSearch.getAddress(), employeeSearch.getAge(),
+					employeeSearch.getCompanyName(), employeeSearch.getDept(), employeeSearch.getSalary());
+
+			employeePageResponse.setCount(employeeList.getSize());
+			employeePageResponse.setListOfEmployees(employeeList.getContent());
+		}
+
+		return employeePageResponse;
 	}
 
 }
