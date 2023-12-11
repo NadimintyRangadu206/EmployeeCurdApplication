@@ -72,22 +72,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee getEmployeeById(int id) {
 
 		Optional<Employee> optionalEmployee = employeeRepository.findById(id);
- 
-		Employee emp= new Employee();
-		
-		if(optionalEmployee.isPresent()) {
-			
-			emp=optionalEmployee.get();
-		}else {
+
+		Employee emp = new Employee();
+
+		if (optionalEmployee.isPresent()) {
+
+			emp = optionalEmployee.get();
+		} else {
 			try {
-			throw new EmployeeException(400,optionalEmployee.orElseThrow().toString());
-			}
-			catch (Exception e) {
+				throw new EmployeeException(400, optionalEmployee.orElseThrow().toString());
+			} catch (Exception e) {
 				logger.info("Employee Id is Not Present");
 			}
 		}
 		return emp;
-		
 
 	}
 
