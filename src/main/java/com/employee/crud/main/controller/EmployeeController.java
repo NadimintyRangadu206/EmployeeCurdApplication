@@ -2,6 +2,8 @@
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,9 @@ import jakarta.validation.Valid;
 @RequestMapping("api/v1/employee/")
 public class EmployeeController {
 
+	private static final Logger logger=LogManager.getLogger(EmployeeController.class);
+	
+	
 	@Autowired
 	EmployeeService employeeService;
 
@@ -47,6 +52,7 @@ public class EmployeeController {
 
 		try {
 			Employee employee = employeeService.saveEmployeeInfo(request);
+			logger.info("Employee Addeded Succesfully!");
 
 			if (employee != null) {
 				return new ResponseEntity<>("Employee Added Successfully", HttpStatus.OK);
