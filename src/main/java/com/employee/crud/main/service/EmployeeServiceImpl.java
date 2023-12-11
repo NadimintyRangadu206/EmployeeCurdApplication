@@ -140,9 +140,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employeePageResponse.setListOfEmployees(employeeList.getContent());
 		} else {
 
-			Page<Employee> employeeList = employeeRepository.findAllSearchByEmployee(paging,
-					employeeSearch.getEmployeeName(), employeeSearch.getAddress(), employeeSearch.getAge(),
-					employeeSearch.getCompanyName(), employeeSearch.getDept(), employeeSearch.getSalary());
+			String employeeName = employeeSearch.getEmployeeName().isEmpty() ? "%"
+					: employeeSearch.getEmployeeName().trim().toUpperCase() + "%";
+
+			String address = employeeSearch.getAddress().isEmpty() ? "%"
+					: employeeSearch.getAddress().trim().toUpperCase() + "%";
+
+//			int age= (employeeSearch.getAge()==0) ? "%" : employeeSearch.getAge()+"%";
+
+			String companyName = employeeSearch.getCompanyName().isEmpty() ? "%"
+					: employeeSearch.getCompanyName().trim().toUpperCase() + "%";
+
+			String dept = employeeSearch.getDept().isEmpty() ? "%"
+					: employeeSearch.getDept().trim().toUpperCase() + "%";
+
+			Page<Employee> employeeList = employeeRepository.findAllSearchByEmployee(paging, employeeName, address,
+					companyName, dept);
 
 			employeePageResponse.setCount(employeeList.getSize());
 			employeePageResponse.setListOfEmployees(employeeList.getContent());
