@@ -13,7 +13,7 @@ public class EmployeeSearch {
 	private String orderBy;
 	private String orderDirection;
 	private int DEFAULT_SIZE = 5;
-	private String DEFAULT_ORDER_BY = "employeeName";
+	private String DEFAULT_ORDER_BY = "employee_Name";
 	private String DEFAULT_ORDER_DIRECTION = "ASC";
 
 	public String getEmployeeName() {
